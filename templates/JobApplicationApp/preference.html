@@ -1,0 +1,25 @@
+
+{% extends "base.html" %}
+
+{% block title %}Preferences Details{% endblock %}
+
+{% block body %}
+<h1> Job Application </h1>
+<h2> Register For Job </h2>
+{% if updateid %}
+    <form method="post" action={% url "preferenceupdatedata" id=updateid %}>
+{% else %}
+    <form method="post" action={% url "preferencesubmit"  %}>
+{% endif %}
+    {% csrf_token %}
+    <div class="components" id="4">
+        <h3>Preferences</h3>
+        {{preference}}
+    </div>
+    <div class="btndiv">
+        <a href="{% url "referenceback" %}" class="btn-a">Prev</a>
+        <p class="btn"><button type="submit" name="next" class="btn">Submit</button></p>
+    </div>
+</form>
+{% endblock body %}
+

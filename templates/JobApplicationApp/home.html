@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block body %}
+    <h1> JOB APPLICATION FORM </h1>
+    <h2>Welcome {{username | capfirst}}</h2>
+    <p><a href="{% url "basic" %}">Add Data</a></p>
+    <div class="listtablediv">
+        <table>
+            <thead>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>City</th>
+                <th>Detail</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </thead>
+            <tbody>
+            {% for dt in pageobj.object_list %}
+                <tr><td>{{dt.first_name}}</td><td>{{dt.last_name}}</td><td>{{dt.email}}</td><td>{{dt.city}}</td><td><a href={% url "detailed" dt.id %}>Detailed</a></td><td><a href="{% url "basicupdate" userid=0 id=dt.id %}">Update</a></td><td><a href="{% url "delete" userid=0 id=dt.id %}">Delete</a></td></tr>
+            {% endfor %}
+            </tbody>    
+        </table>
+        </div>
+        <center>
+        <div style="background:black; color:white; font-weight:bold; font-size:21px;">
+            {% if pageobj.has_previous %}
+                <a href="?page={{pageobj.previous_page_number}}"> &lt; </a>
+            {% endif %}
+                <span>{{pageobj.number}}</span>
+            {% if pageobj.has_next %}
+                <a href="?page={{pageobj.next_page_number}}"> &gt; </a>
+            {% endif %}
+        </div>
+    </center>
+{% endblock %}

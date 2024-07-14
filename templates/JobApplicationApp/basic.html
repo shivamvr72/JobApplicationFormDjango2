@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Basic Details{% endblock %}
+
+{% block body %}
+<h1> Job Application </h1>
+<h2> Register For Job </h2>
+{% if updateid %}
+<form method="post" action={% url "basic_update_data" id=updateid %}>
+{% else %}
+<form method="post" action={% url "basicsubmit" %}>
+{% endif %}
+    <div class="components" id="0">
+        <h3>Basic Details</h3>
+            {% csrf_token %}
+            {{basic}}
+    </div>
+    <button type="submit" class="btn">Next</button>
+</form>
+
+{% comment %} <script src=" {% static "javascript/JobApplication/errors.js"%}"></script> {% endcomment %}
+{% endblock body %}
+
+{% comment %} https://simpleisbetterthancomplex.com/tutorial/2018/01/29/how-to-implement-dependent-or-chained-dropdown-list-with-django.html {% endcomment %}
+

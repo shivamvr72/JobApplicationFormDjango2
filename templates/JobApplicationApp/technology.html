@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Techonology Details{% endblock %}
+{% block style %}
+    {% comment %} <style>
+        #id_techonologies-0-status, #id_techonologies-1-status, #id_techonologies-2-status{
+            display: flex;
+            background-color: antiquewhite;   
+        }
+    </style> {% endcomment %}
+{% endblock %}
+
+{% block body %}
+<h1> Job Application </h1>
+<h2> Register For Job </h2>
+{% if updateid %}
+    <form method="post" action={% url "technologyupdatedata" id=updateid %}>
+{% else %}
+    <form method="post" action={% url "techonologysubmit" %}>
+{% endif %}
+    {% csrf_token %}
+    <div class="components" id="4">
+        {{reference.technology}}
+        <h3>Techonology</h3>
+        {% if updateid or backid %}
+        {% for obj in technology %}
+        <div class="comformLanguage">
+            {% comment %} {{obj.technology}}
+            {{obj.status}} {% endcomment %}
+            {% if obj.technology %}
+                <input hidden value={{obj.id}} name="id" />
+                <lable for="technology"> {{obj.technology}}:&nbsp;&nbsp;&nbsp; </lable><input hidden value={{obj.technology}} name="technology">
+                <lable for="status"> Begginer </lable><input type="radio" value="begginer" {% if obj.status == "begginer" %} checked {% endif %} name={{ obj.technology }}>
+                <lable for="status"> Mediator  </lable><input type="radio" value="mediator" {% if obj.status == "mediator" %} checked {% endif %} name={{ obj.technology }}>
+                <lable for="status"> Expert </lable><input type="radio" value="expert" {% if obj.status == "expert" %} checked {% endif %} name={{ obj.technology }}> 
+            {% endif %}
+        </div>
+        {% endfor%}
+        {% else %}
+        <div class="comformTechno">
+            {{technology}}
+        </div>
+        {% endif %}
+    </div>
+    <div class="btndiv">
+        
+        <a href={% url "langaugeback" %}>Prev</a>
+        <p class="btn"><button type="submit" class="btn">Next</button></p>
+    </div>
+</form>
+{% endblock body %}
+

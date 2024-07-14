@@ -1,0 +1,47 @@
+
+{% extends "base.html" %}
+
+{% block title %}Langauage Details{% endblock %}
+
+{% block body %}
+<h1> Job Application </h1>
+<h2> Register For Job </h2>
+{% if updateid %}
+    <form method="post" action={% url "langaugeupdatedata" id=updateid %}>
+{% else %}
+    <form method="post" action={% url "languagesubmit" %}>
+{% endif %}
+    {% csrf_token %}
+    <h3>Langauage</h3>
+    <div class="components" id="3">
+        {{language.management_form}}
+        {% if updateid or backid %}
+        {% for obj in  language %}
+        <div class="comformLanguage">
+            {% comment %} {{obj.langauage}}
+            {{obj.isread}}
+            {{obj.isspeak}}
+            {{obj.iswrite}} {% endcomment %}
+            {% if obj.langauage %}
+            <input hidden value={{obj.id}} name="id" />
+            <lable for="langauage"> language </lable><input disabled value={{obj.langauage}} name="languages" >
+            <lable for="isread"> Read </lable><input type="checkbox" {% if obj.isread == True %} checked {% endif %} name={{"isread_"|add:obj.langauage}} >
+            <lable for="isspeak"> Write  </lable><input type="checkbox" {% if obj.isspeak == True %} checked {% endif %} name={{"isspeak_"|add:obj.langauage}} >
+            <lable for="iswrite"> Speak </lable><input type="checkbox" {% if obj.iswrite %} checked {% endif %} name={{"iswrite_"|add:obj.langauage}} > 
+            {% endif %}
+        </div>
+        {% endfor%}
+        {% else %}
+        <div class="comformLanguage">
+            {{language}}
+        </div>
+        {% endif %}
+    </div>
+    <div class="btndiv">
+        <a href={% url "exprienceback" %}>Prev</a>
+        {% comment %} <a href="{% url "workexprience" %}" class="btn-a"><p class="btn">Previous</p></a> {% endcomment %}
+        <p class="btn"><button type="submit" name="next" class="btn">Next</button></p>
+    </div>
+</form>
+{% endblock body %}
+

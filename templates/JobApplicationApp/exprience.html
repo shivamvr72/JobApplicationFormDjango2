@@ -1,0 +1,62 @@
+
+{% extends "base.html" %}
+{% load static %}   
+
+{% block title %}Experience Details{% endblock %}
+{% block style %}
+<style>
+    .btns{
+        background-color:skyblue;
+        padding:4px;
+        margin:10px
+    }
+
+</style>
+{% endblock %}
+
+
+{% block body %}
+<h1> Job Application </h1>
+<h2> Register For Job </h2>
+{% if updateid %}
+    <form method="post" action={% url "exprienceupdatedata" id=updateid %}>
+{% else %}
+    <form method="post" action={% url "workexpriencesubmit" %}>
+        <input name="id" value="newid" hidden> 
+{% endif %}
+    {% csrf_token %}
+    <div class="components" id="workexp">
+        <h3>Work Experience</h3>
+        {{exprience.management_form}}
+        {% if updateid or backid %}
+        {% for obj in exprience %}
+        <div class="comform">
+            {% if obj.company %}
+            <input hidden name="id" value={{obj.id}} >
+            <lable for="company"> Company </lable><input value={{obj.company}} name="company" >
+            <lable for="desingnation"> Course </lable><input value={{obj.desingnation}} name="desingnation" >
+            <lable for="from_year"> From Year </lable><input value={{obj.from_year}} name="from_year" >
+            <lable for="to_year"> To Year </lable><input value={{obj.to_year}} name="to_year" >
+            {% endif %}
+        </div>
+        {% endfor%}
+        {% else %}
+        <div class="comform">
+        {{exprience}}
+        </div>
+        {% endif %}
+    </div>
+    <div style="display:flex">
+        <p id="addw" class="btns">Add More</p>
+        <p id="removew" class="btns">Remove</p>
+    </div>
+
+    <div class="btndiv">
+        <a href={% url "educationback" %}>Prev</a>
+        {% comment %} <a href="{% url "education" %}" class="btn-a"><p class="btn">Previous</p></a> {% endcomment %}
+        <p class="btn"><button type="submit" name="next" class="btn">Next</button></p>
+    </div>
+    <script src=" {% static "javascript/JobApplication/addmorefields.js"%}"></script>
+</form>
+{% endblock body %}
+

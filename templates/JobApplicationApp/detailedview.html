@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block body %}
+    <h1> JOB APPLICATION FORM DETAILED VIEW</h1>
+    <h2>Welcome {{user | capfirst}}</h2>
+    <a href="{% url "home" %}">Home</a>
+    {% for keytitle, valuesdata in data.items %}
+    <div class="detailed">
+        <br>
+        <h4><b>{{keytitle | capfirst}}</b></h4>
+        {% if keytitle == "education" %}
+            <table>
+                <thead>
+                    <th>Education Authority</th>
+                    <th>Course</th>
+                    <th>Year</th>
+                    <th>Percentage</th>
+                <thead>
+                <tbody>
+        {% endif %}
+        {% if keytitle == "Work Experience" %}
+            <table>
+                <thead>
+                    <th>Company</th>
+                    <th>Desingnation</th>
+                    <th>From Year</th>
+                    <th>To Year</th>
+                <thead>
+                <tbody>
+        {% endif %}
+        {% if keytitle == "languages" %}
+            <table>
+                <thead>
+                    <th>Langauage</th>
+                    <th>Read</th>
+                    <th>Speak</th>
+                    <th>Write</th>
+                <thead>
+                <tbody>
+        {% endif %}
+        {% if keytitle == "technologies" %}
+            <table>
+                <thead>
+                    <th>Technology</th>
+                    <th>Status</th>
+                <thead>
+                <tbody>
+        {% endif %}
+        {% if keytitle == "references" %}
+            <table>
+                <thead>
+                    <th>Reference Name</th>
+                    <th>Reference Phone</th>
+                    <th>Relation</th>
+                <thead>
+                <tbody>
+        {% endif %}
+        
+        {% for values in valuesdata.all %}
+            {% for key, value in values.items %}
+                {% if  key == "id" or key == "user_id_id" or key == "form_id_id" %}
+                {% comment %}  {% endcomment %}
+                {% else %}
+                    {% if key in '("first_name", "last_name", "designation", "email", "birth_date", "city",  "address1", "address2", "zipcode", "state", "pref_location", "notice_period", "department", "expected_ctc", "actual_ctc")' or key == "relationship" %}
+                        <p><b>{{key | capfirst}}:</b>  {{value}}</p>
+                    {% elif key == "education_authority" %}
+                        <tr><td>{{ values.education_authority }}</td> <td>{{ values.course }}</td><td>{{ values.passing_year }}</td><td>{{ values.percentage }}</td></p>
+                    {% elif key == "company" %}
+                        <tr><td>{{ values.company }}</td> <td>{{ values.desingnation }}</td><td>{{ values.from_year }}</td><td>{{ values.to_year }}</td></p>
+                    {% elif key == "langauage" %}
+                        <tr><td>{{ values.langauage }}</td> <td>{{ values.isread }}</td><td>{{ values.isspeak }}</td><td>{{ values.iswrite }}</td></p>
+                    {% elif key == "technology" %}
+                        <tr><td>{{ values.technology }}</td> <td>{{ values.status }}</td></p>
+                    {% elif key == "rname" %}
+                        <tr><td>{{ values.rname }}</td> <td>{{ values.rphone_number }}</td> <td>{{ values.relation }}</td></p>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}             
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    {% endfor  %}
+    <a href="{% url "home" %}">Home</a>
+{% endblock %}

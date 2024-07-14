@@ -1,0 +1,44 @@
+
+{% extends "base.html" %}
+
+{% block title %}References Details{% endblock %}
+
+{% block body %}
+<h1> Job Application </h1>
+<h2> Register For Job </h2>
+
+{% if updateid or backid %}
+    <form method="post" action={% url "referenceupdatedata" id=updateid %}>
+{% else %}
+    <form method="post" action={% url "referencesubmit"  %}>
+{% endif %}
+    {% csrf_token %}
+    <div class="components" id="3">
+        {{reference.management_form}}
+        <h3>References</h3>
+        <div class="comformRefrence">
+        {% if updateid or backid %}
+        {% for obj in reference %}
+        <div class="comform">
+            {% if obj.rname %}  
+            {% if updateid %}
+            <input name="id" value={{obj.id}} hidden />
+            {% endif %}
+            <lable for="rname"> Rname </lable><input value={{obj.rname}} name="rname" >
+            <lable for="rphone_number"> Rphone Number </lable><input value={{obj.rphone_number}} name="rphone_number" >
+            <lable for="relation"> Relation </lable><input value={{obj.relation}} name="relation" >
+            {% endif %}
+        </div>
+        {% endfor%}
+        {% else %}
+            {{reference}}
+        {% endif %}
+        </div>
+    </div>
+    <div class="btndiv">
+        <a href="{% url "technologyback" %}" class="btn-a">Prev</a>
+        <p class="btn"><button type="submit" name="next" class="btn">Next</button></p>
+    </div>
+</form>
+{% endblock body %}
+

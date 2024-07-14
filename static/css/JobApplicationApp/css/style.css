@@ -1,0 +1,139 @@
+.errorlist{
+    color: red;
+    /* display: none; */
+    font-size: 11px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#id_status{
+    display: flex;
+}
+
+/* #id_status_0{
+    display: none;
+} */
+
+.comform{
+    display: flex;
+    margin: 20px;
+}
+
+.comform input, label{
+    margin: 10px;
+}
+
+#id_gender_0{
+    display: none;
+}
+
+.comformLanguage{
+    width: 650px;
+}
+
+.comformTechno{
+    width: 750px;
+    display: flex;
+    flex-wrap: wrap;
+    /* background-color: antiquewhite; */
+}
+.comformTechno input{
+    font-size: 13px;
+    margin: 5px;
+}
+
+
+.comformEdu{
+   width: 1300px; 
+}
+
+.comformEdu input{
+    margin: 5px;
+}
+
+.comformWork{
+    width: 1290px;
+    /* background-color: aliceblue; */
+}
+
+.comformRefrence{
+    width: 980px;  
+    /* background-color: aliceblue; */
+}
+
+
+#id_techonologies-0-status, #id_techonologies-1-status, #id_techonologies-2-status{
+    display: flex;
+}
+
+
+h1{
+    color:rgb(11, 128, 0);
+    /* background-color:red; */
+}
+
+
+.components{
+    margin-top: 40px;
+}
+
+
+/* navigation btn style */
+
+
+/* for detailed views */
+.detailed{
+    background-color: aquamarine;
+    padding: 20px;
+    margin: 30px;
+    text-align: center;
+}
+
+body{
+    background-color: rgb(57, 56, 56);
+}
+
+body form{
+    color:white;
+}
+
+.detailed table{
+    margin: 5px auto;
+}
+
+.detailed h4{
+    font-size: 25px;
+}
+
+td, th{
+    font-size: 20px;
+    margin: 6px;
+    padding: 5px;
+    /* background-color:aliceblue */
+}
+
+.detailed {
+    border-radius: 7px;
+}
+
+.detailed p{
+    font-size: 20px;
+}
+
+
+/* styles home list view form */
+.listtablediv{
+    background-color: aquamarine;
+    padding:20px;
+    border-radius: 7px;
+}
+
+.listtablediv table{
+    margin: 20px auto;
+}
+
+.listtablediv table td, th{
+    margin: 5px;
+    padding: 15px;
+}

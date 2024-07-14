@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Education Details{% endblock %}
+{% block style %}
+<style>
+    .btns{
+        background-color:skyblue;
+        padding:4px;
+        margin:10px
+    }
+</style>
+{% endblock %}
+{% block body %}
+<h1> Job Application </h1>
+<h2> Register For Job </h2>
+{% if updateid %}
+<form method="post" action={% url "education_update_data" id=updateid %}>
+{% else %}
+<form method="post" action={% url "educationsubmit" %}>
+    <input name="id" value="newid" hidden>
+{% endif %}
+    {% csrf_token %}
+    <div class="components" id="education">
+        <h3>Education</h3>  
+        {{education.management_form}}
+        {% if updateid or backid %}
+        {% for obj in education %}
+        <div class="comform">
+            {% if obj.education_authority %}
+            <input hidden name="id" value={{obj.id}} >
+            <lable for="education_authority"> Education Authority </lable><input value={{obj.education_authority}} name="education_authority" >
+            <lable for="course"> Course </lable><input value={{obj.course}} name="course" >
+            <lable for="passing_year"> Passing Year </lable><input value={{obj.passing_year}} name="passing_year" >
+            <lable for="percentage"> Percentage </lable><input value={{obj.percentage}} name="percentage" >
+        </div>
+            {% endif %}
+        {% endfor%}
+        {% else %}
+        <div class="comform">
+            {{education}}   
+        </div>
+        {%endif%}
+
+    </div>
+
+    <div style="display:flex">
+    <p id="add" class="btns">Add More</p>
+    <p id="remove" class="btns">Remove</p>
+    </div>
+    <div class="btndiv">
+        <a href="{% url "basicback" %}">Prev</a>
+        <p class="btn"><button type="submit" name="next" class="btn">Next</button></p>
+    </div>
+    </form>
+<script src=" {% static "javascript/JobApplication/addmorefields.js"%}"></script>
+
+{% endblock body %}
