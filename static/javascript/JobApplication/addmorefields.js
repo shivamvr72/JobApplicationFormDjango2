@@ -4,7 +4,7 @@ try{
 
   remove = document.querySelector("#remove")
   remove.addEventListener("click", removeRow)
-
+  
 
   divmain = document.querySelector("#education")
 

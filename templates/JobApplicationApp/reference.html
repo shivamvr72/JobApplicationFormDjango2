@@ -7,7 +7,7 @@
 <h1> Job Application </h1>
 <h2> Register For Job </h2>
 
-{% if updateid or backid %}
+{% if updateid %}
     <form method="post" action={% url "referenceupdatedata" id=updateid %}>
 {% else %}
     <form method="post" action={% url "referencesubmit"  %}>

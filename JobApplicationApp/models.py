@@ -119,3 +119,11 @@ class Preferences(models.Model):
 
     def __str__(self):
         return f"{self.form_id}"
+
+
+class State(models.Model):
+    name = models.CharField(max_length=100)
+
+class City(models.Model):
+    name = models.CharField(max_length=100)
+    state = models.ForeignKey(State, on_delete=models.CASCADE, related_name='cities')

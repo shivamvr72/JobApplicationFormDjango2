@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate
 import json
+from django.http import JsonResponse
 from . import forms
-from .models import User, BasicDetails, LanguagesKnown, TechnologiesKnown, EducationDetails, WorkExperienceDetails, References, Preferences
+from .models import User, BasicDetails, LanguagesKnown, TechnologiesKnown, EducationDetails, WorkExperienceDetails, References, Preferences, City, State
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def register_user(request):
@@ -300,12 +301,32 @@ def techonology_submit(request):
     if form.is_valid():
         request.session["technology"] = form.cleaned_data
         print(request.session["technology"], "technology")
-    
+        
+    if "references" in request.session and len(request.session["references"]):     
+        data = request.session["references"]
+        context = {"reference": data, "backid":True}
+        return render(request, "reference.html", context)
+        # return super_rendering_function(request, "references", forms.RefrenceForm(initial=data), "reference.html")
     return redirect("reference")
 
 
 def reference_submit(request):
     form = forms.referenceformSet(request.POST, prefix="references")
+    if "references" in request.session and len(request.session["references"]): 
+        sessionexplist = [] 
+        newdatadict = dict(form.data)
+        for i in range(len(newdatadict["rname"])):
+            ndict = {}
+            for k, v in newdatadict.items():
+                if "csrfmiddlewaretoken" == k or "next" == k:
+                    continue
+                else:
+                    ndict[k] = v[i]
+
+            sessionexplist.append(ndict)
+        request.session["references"] = sessionexplist
+        return redirect("preference")
+    
     if references_super(request, form):
         return redirect("preference")
     else:
@@ -672,11 +693,20 @@ def technology_back(request):
     # return super_rendering_function(request, "technology", forms.TechnologyForm(initial=data), "technology.html")
 
 def reference_back(request):
-    # data = request.session["references"][0]
-    # return render(request, "reference.html", context)
+    data = request.session["references"]
+    context = {"reference": data, "backid":True}
+    return render(request, "reference.html", context)
     # return super_rendering_function(request, "references", forms.RefrenceForm(initial=data), "reference.html")
     return redirect("reference")
 
-# def preference_back(request):
-#     pref = request.session["preference"][0
-    # return super_rendering_function(request, "references", forms.Languages(initial=data), "references.html")
+
+def state_view(request):
+    states = State.objects.all()
+    state_choices = [(state.id ,state.name) for state in states]
+    return JsonResponse({'state_choices': state_choices})
+
+def get_cities(request):
+    state_id = request.GET.get('state_id') 
+    cities = City.objects.filter(state_id=state_id)
+    city_choices = [(city.id, city.name) for city in cities]
+    return JsonResponse({'city_choices': city_choices})

@@ -25,6 +25,9 @@ urlpatterns = [
     path("referencesubmit/", views.reference_submit, name="referencesubmit"),
     path("preferencesubmit/", views.preference_submit, name="preferencesubmit"),
     
+    path('get_states/', views.state_view, name='get_states'),
+    path('get_cities/', views.get_cities, name='get_cities'),
+    
     # updating the form
     path("basicupdate/<int:userid>/<int:id>", views.basic_update, name="basicupdate"),
     path("educationupdate/<int:id>", views.education_update, name="educationupdate"),

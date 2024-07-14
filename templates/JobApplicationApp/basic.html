@@ -15,8 +15,65 @@
             {% csrf_token %}
             {{basic}}
     </div>
+    <div>
+        <form id="state_form">
+            <select name="state" id="state_select">
+                {% for state in states %}
+                <option>Select State</option>
+                <option value="{{ state.name }}">{{ state.name }}</option>
+                {% endfor %}
+            </select>
+            <select name="city" id="city_select" disabled>
+                <option value=""> Select City </option>
+            </select>
+        </form>
+    </div>
     <button type="submit" class="btn">Next</button>
 </form>
+
+<script>
+    const stateSelect = document.getElementById("state_select");
+const citySelect = document.getElementById("city_select");
+
+// Fetch states on page load
+fetch('/get_states/')  // Replace with your actual URL for fetching states
+  .then(response => response.json())
+  .then(data => {
+    for (const state of data.state_choices) {
+      const option = document.createElement("option");
+      option.text = state[1];  // Assuming data has "state_choices" and state is an array with text at index 1
+      option.value = state[0];  // Assuming state ID is at index 0
+      stateSelect.appendChild(option);
+    }
+
+    // Add event listener to state select after populating it
+    stateSelect.addEventListener("change", function() {
+      const stateId = this.value;
+
+      fetch(`/get_cities/?state_id=${stateId}`)
+        .then(response => response.json())
+        .then(data => {
+          citySelect.innerHTML = "";
+          const defaultOption = document.createElement("option");
+          defaultOption.text = "--- Select City ---";
+          defaultOption.value = "";
+          citySelect.appendChild(defaultOption);
+
+          for (const choice of data.city_choices) {
+            const option = document.createElement("option");
+            option.text = choice[1];
+            option.value = choice[0];
+            citySelect.appendChild(option);
+          }
+
+          citySelect.disabled = false;
+        })
+        .catch(error => console.error(error));
+    });
+  })
+  .catch(error => console.error(error));
+
+</script>
 
 {% comment %} <script src=" {% static "javascript/JobApplication/errors.js"%}"></script> {% endcomment %}
 {% endblock body %}

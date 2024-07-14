@@ -304,3 +304,14 @@ class PrefrencesForm(forms.ModelForm):
                   department, expected_ctc, actual_ctc)
         for field in fields:
             empty_check(self, field)
+
+
+class StateForm(forms.ModelForm):
+    class Meta:
+        model = models.State
+        fields = ('name',)
+
+class CityForm(forms.ModelForm):
+    class Meta:
+        model = models.City
+        fields = ('name',)
